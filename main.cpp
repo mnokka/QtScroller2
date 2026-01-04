@@ -13,15 +13,17 @@
 
 MainWindow::MainWindow()
 {
+
+    int h =400;
     setWindowTitle("Skrollaava Teksti MPN 2025");
-    setFixedSize(800, 150);
+    setFixedSize(800, h-50);
 
     scene = new QGraphicsScene(this);
     QString scrollingText = "----- By mika.nokka1@gmail.com 2025 ---    Forever scrolling text example!";
 
     textItem1 = new QGraphicsTextItem(scrollingText);
     textItem2 = new QGraphicsTextItem(scrollingText);
-    QFont font("Arial", 40);
+    QFont font("Arial", h/3);
     textItem1->setFont(font);
     textItem2->setFont(font);
 
@@ -32,11 +34,11 @@ MainWindow::MainWindow()
     scene->addItem(textItem2);
 
     int textWidth = textItem1->boundingRect().width();
-    scene->setSceneRect(0, 0, textWidth , 200);
+    scene->setSceneRect(0, 0, textWidth , h);
 
 
     view = new QGraphicsView(scene, this);
-    view->setFixedSize(800, 200);
+    view->setFixedSize(800, h);
     view->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     view->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     view->show();
@@ -65,8 +67,11 @@ void MainWindow::moveText()
         xPos2 = xPos1 + textWidth;
     }
 
-    textItem1->setPos(xPos1, height() / 2 - 20);
-    textItem2->setPos(xPos2, height() / 2 - 20);
+    // keskitys pystysuunnassa
+    qreal y = (scene->height() - textItem1->boundingRect().height()) / 2;
+
+    textItem1->setPos(xPos1, y);
+    textItem2->setPos(xPos2, y);
     }
 
 
