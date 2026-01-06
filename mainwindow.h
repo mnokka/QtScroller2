@@ -17,6 +17,7 @@ public:
 private slots:
     void moveText();
 
+
 private:
     QGraphicsScene *scene;         // Grafiikkasuuntaus
     QGraphicsView *view;           // Näkymä grafiikkasuuntausta
@@ -26,6 +27,7 @@ private:
     int xPos1;
     int xPos2;
     int direction=-1;     // Liikennesuunta: 1 oikealle, -1 vasemmalle
+    qreal textY; // tekstin keskitetty y koordinaatti
 };
 
 #endif // MAINWINDOW_H
