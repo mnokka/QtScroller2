@@ -6,13 +6,18 @@
 #include <QGraphicsView>
 #include <QGraphicsTextItem>
 #include <QTimer>
+#include <QMenuBar>
 
-class MainWindow : public QWidget
+class MainWindow : public QMainWindow
 {
     Q_OBJECT
 
 public:
-    MainWindow();
+
+    explicit MainWindow(QWidget *parent = nullptr);
+
+    ~MainWindow();
+    void createMenus(void);
 
 private slots:
     void moveText();
@@ -28,6 +33,9 @@ private:
     int xPos2;
     int direction=-1;     // Liikennesuunta: 1 oikealle, -1 vasemmalle
     qreal textY; // tekstin keskitetty y koordinaatti
+
+
+    QMenu *helpMenu;
 };
 
 #endif // MAINWINDOW_H
