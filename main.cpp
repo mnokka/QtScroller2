@@ -11,7 +11,8 @@
 #include <QFile>
 #include <QTextStream>
 
-MainWindow::MainWindow()
+MainWindow::MainWindow(QWidget *parent)
+    : QMainWindow(parent)
 {
 
     int h =400;
@@ -33,8 +34,13 @@ MainWindow::MainWindow()
     scene->addItem(textItem1);
     scene->addItem(textItem2);
 
+    // scene koko
     int textWidth = textItem1->boundingRect().width();
     scene->setSceneRect(0, 0, textWidth , h);
+
+    // tekstin y keskitys (fixed)
+    qreal textHeight = textItem1->boundingRect().height();
+    textY = (scene->height() - textHeight) / 2;
 
 
     view = new QGraphicsView(scene, this);
@@ -45,16 +51,20 @@ MainWindow::MainWindow()
 
     timer = new QTimer(this);
     connect(timer, &QTimer::timeout, this, &MainWindow::moveText);
-    timer->start(3);
+    timer->start(2);
 
     xPos1 = 0;
     xPos2 = textWidth; // Toinen teksti alkaa ensimmäisen perästä
+
+    createActions();
+    createMenus();
+
 }
 
 void MainWindow::moveText()
 {
     int textWidth = textItem1->boundingRect().width();
-    int windowWidth = width();
+    //int windowWidth = width();
 
     xPos1 -= 1;
     xPos2 -= 1;
@@ -67,13 +77,15 @@ void MainWindow::moveText()
         xPos2 = xPos1 + textWidth;
     }
 
-    // keskitys pystysuunnassa
-    qreal y = (scene->height() - textItem1->boundingRect().height()) / 2;
 
-    textItem1->setPos(xPos1, y);
-    textItem2->setPos(xPos2, y);
+    textItem1->setPos(xPos1, textY);
+    textItem2->setPos(xPos2, textY);
     }
 
+
+    MainWindow::~MainWindow()
+    {
+    }
 
 
 int main(int argc, char *argv[])
